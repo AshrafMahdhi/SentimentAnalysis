@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>Sentiment Analysis App</title>
+    </head>
+    <body>
+       <h1>Welcome to our English Sentiment Analyser </h1>
+       <form method='POST'>
+       <textarea id="text1"name=text1 placeholder="Say something to Analyse" rows="10" cols="100"></textarea> <br> <br>
+       <input type="submit" id="sub">
+       </form>
+	<div id="output"></div>
+       
+       <span>by AshrafMahdhi @Enetcom </span>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+	      $("#sub").click(function(event){
+event.preventDefault();
+		 var text1 = $.trim($("#text1").val());
+		console.log(text1);
+
+         $.ajax({
+            url: "/get_data",
+            type: "POST",
+            data: {text1: text1},
+           success: function(response) {
+		console.log(response)
+           	$("#output").html(`<h2> the sentiment of </h2> <p>${response.text1}</p> <h2> is ${response.final} % positive !</h2> `);
+         },
+          error: function(xhr) {
+        console.log("hey bro :"+xhr)
+        }
+       });
+$("#text1").val("");
+     });
+  
+</script>
+</body>
+</html>
